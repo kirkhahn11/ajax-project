@@ -1,0 +1,15 @@
+.main-container {
+  background-image: url(../images/Brewery-background.jpeg);
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+}
+
+.heading {
+  font-family: 'Sedgwick Ave Display', cursive;
+  font-size: 90px;
+}
+
+.inherit-height {
+  height: inherit;
+}
