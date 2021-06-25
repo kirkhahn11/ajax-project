@@ -19,11 +19,24 @@
     <header class="container">
       <div class="row justify-content-evenly align-items-center">
         <img src="../choose-brews-app/images/Cheers.png" alt="Beer Mugs Cheersing" class="col-2 inherit-height">
-        <h1 class="heading col-6 text-center text-white">Choose Brews</h1>
+        <h1 class="heading page-font col-6 text-center text-white">Choose Brews</h1>
         <img src="../choose-brews-app/images/beer-brewery.png" alt="Hops" class="inherit-height col-2">
       </div>
     </header>
     <main>
+      <div class="d-flex justify-content-center">
+        <form action="" class="w-50" id="brewery-search">
+          <select class="w-100 text-center" id="location-select">
+            <option selected>Search By City Or State</option>
+            <option value="by_city">By City</option>
+            <option value="by_state">By State</option>
+          </select>
+          <input class="d-inline w-100 mt-1 form-control" disabled id="location-search" type="text" placeholder="">
+          <div class="text-center">
+           <button type="submit" class="btn page-font mt-1 btn-danger btn-lg">Search</button>
+          </div>
+        </form>
+      </div>
     </main>
   </div>
   <script src="js/data.js"></script>

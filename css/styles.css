@@ -6,10 +6,13 @@
 }
 
 .heading {
-  font-family: 'Sedgwick Ave Display', cursive;
   font-size: 90px;
 }
 
 .inherit-height {
   height: inherit;
+}
+
+.page-font {
+  font-family: 'Sedgwick Ave Display', cursive;
 }
