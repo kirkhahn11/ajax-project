@@ -17,25 +17,41 @@
 <body>
   <div class="main-container">
     <header class="container">
-      <div class="row justify-content-evenly align-items-center">
-        <img src="../choose-brews-app/images/Cheers.png" alt="Beer Mugs Cheersing" class="col-2 inherit-height">
-        <h1 class="heading page-font col-6 text-center text-white">Choose Brews</h1>
-        <img src="../choose-brews-app/images/beer-brewery.png" alt="Hops" class="inherit-height col-2">
+      <div class="row head-row justify-content-evenly align-items-center">
+        <img src="../choose-brews-app/images/Cheers.png" alt="Beer Mugs Cheersing" class="col-2 inherit-height head-img">
+        <h1 id="heading" class="heading page-font col-6 text-center text-white">Choose Brews</h1>
+        <img src="../choose-brews-app/images/beer-brewery.png" alt="Hops" class="inherit-height col-2 head-img">
       </div>
     </header>
     <main>
       <div class="d-flex justify-content-center">
         <form action="" class="w-50" id="brewery-search">
-          <select class="w-100 text-center" id="location-select">
-            <option selected>Search By City Or State</option>
-            <option value="by_city">By City</option>
-            <option value="by_state">By State</option>
-          </select>
-          <input class="d-inline w-100 mt-1 form-control" disabled id="location-search" type="text" placeholder="">
+          <input class="d-inline w-100 mt-1 form-control" id="location-search" type="text" placeholder="Which City???">
           <div class="text-center">
            <button type="submit" class="btn page-font mt-1 btn-danger btn-lg">Search</button>
           </div>
         </form>
+      </div>
+      <table class="table table-dark table-bordered text-center w-75 m-auto hidden mt-1" id="search-table">
+        <thead class="table-light">
+          <tr>
+            <th></th>
+            <th scope="col">Name</th>
+            <th scope="col">Address</th>
+          </tr>
+        </thead>
+        <tbody id="search-results">
+        </tbody>
+        <tfoot>
+          <tr class="text-end">
+            <td colspan="3">
+             <a class="link-primary">Next</a>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+      <div class="text-center">
+        <button type="submit" id="must-see-button" class="hidden page-font mt-1 btn-danger btn-lg">Add to Must-See</button>
       </div>
     </main>
   </div>
