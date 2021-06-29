@@ -32,7 +32,7 @@
           </div>
         </form>
       </div>
-      <table class="table table-dark table-bordered text-center w-75 m-auto hidden mt-1" id="search-table">
+      <table class="table table-dark table-bordered text-center w-75 m-auto hidden mt-5" id="search-table">
         <thead class="table-light">
           <tr>
             <th></th>
@@ -45,7 +45,10 @@
         <tfoot>
           <tr class="text-end">
             <td colspan="3">
-             <a class="link-primary">Next</a>
+              <div class="d-flex justify-content-around">
+                <button class="hidden btn-link link-danger" id="previous">Previous</button>
+                <button class="btn btn-link link-primary" id="next">Next</button>
+              </div>
             </td>
           </tr>
         </tfoot>
