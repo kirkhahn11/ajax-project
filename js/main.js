@@ -1,3 +1,4 @@
+/* global getData */
 const locationSearch = document.getElementById('location-search');
 const searchForm = document.getElementById('brewery-search');
 const tbody = document.getElementById('search-results');
@@ -8,9 +9,20 @@ const mustSeeButton = document.getElementById('must-see-button');
 let city;
 let count = 1;
 let breweries;
+let mustSeeList = [];
 
 function searchFormatFix(string) {
   return string.replaceAll(' ', '_');
+}
+
+function addMustSee(brewery) {
+  for (let i = 0; i < mustSeeList.length; i++) {
+    if (mustSeeList[i].id === brewery.id) {
+      mustSeeList.splice(i, 1);
+      return;
+    }
+  }
+  mustSeeList.push(brewery);
 }
 
 function newSearch(breweries) {
@@ -35,6 +47,9 @@ function newSearch(breweries) {
     const input = document.createElement('input');
     input.setAttribute('type', 'checkbox');
     input.classList.add('mt-2');
+    input.addEventListener('change', function () {
+      addMustSee(breweries[i]);
+    });
     tdInput.append(input);
     const tdName = document.createElement('td');
     tdName.textContent = breweries[i].name;
@@ -44,6 +59,18 @@ function newSearch(breweries) {
     tbody.append(tr);
   }
 }
+
+// function renderMustSee() {
+//   const getList = localStorage.getItem('must-see');
+//   let mustSeeData;
+//   if (getList === 'undefined') {
+//     return null;
+//   } else {
+//     mustSeeData = JSON.parse(getList);
+
+//   }
+
+// }
 
 searchForm.addEventListener('submit', e => {
   e.preventDefault();
@@ -61,6 +88,7 @@ searchForm.addEventListener('submit', e => {
 });
 
 next.addEventListener('click', () => {
+  mustSeeList = [];
   breweries = [];
   count++;
   previous.classList.replace('hidden', 'btn');
@@ -74,6 +102,7 @@ next.addEventListener('click', () => {
 });
 
 previous.addEventListener('click', () => {
+  mustSeeList = [];
   breweries = [];
   count--;
   const searchValue = searchFormatFix(city);
@@ -83,4 +112,26 @@ previous.addEventListener('click', () => {
       breweries = res;
       newSearch(breweries);
     });
+});
+
+mustSeeButton.addEventListener('click', () => {
+  let sentence = '';
+  getData(mustSeeList);
+  if (mustSeeList.length === 0) {
+    return window.alert('No Breweries Selected');
+  } else {
+    localStorage.setItem('must-see', JSON.stringify(mustSeeList));
+    for (let i = 0; i < mustSeeList.length; i++) {
+      sentence += mustSeeList[i].name + ' ';
+    }
+    window.alert(sentence + 'Successfully added to Must-See');
+    mustSeeList = [];
+    const searchValue = searchFormatFix(city);
+    fetch(`https://api.openbrewerydb.org/breweries?by_city=${searchValue}&per_page=10&page=${count}`)
+      .then(res => res.json())
+      .then(res => {
+        breweries = res;
+        newSearch(breweries);
+      });
+  }
 });
