@@ -5,11 +5,24 @@
   min-width: 100%;
 }
 
+.brewery-background {
+  background-image: url(../images/bartop-background.jpeg);
+  background-size: cover;
+}
+
+#test {
+  display: none;
+}
+
 .hidden {
   display: none;
 }
 
 #heading {
+  font-size: 90px;
+}
+
+#heading2 {
   font-size: 90px;
 }
 
@@ -25,4 +38,16 @@ tbody {
   height: 100px;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+.w-35 {
+  width: 35%;
+}
+
+.fb-50 {
+  flex-basis: 50%;
+}
+
+.h-200 {
+  height: 200px;
 }

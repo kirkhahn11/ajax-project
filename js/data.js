@@ -1,4 +1,5 @@
 /* exported getData */
+/* exported mustSeeData */
 let mustSeeData = [];
 
 var dataJSON = localStorage.getItem('must-see');

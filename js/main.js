@@ -1,10 +1,13 @@
 /* global getData */
+/* global mustSeeData */
 const locationSearch = document.getElementById('location-search');
 const searchForm = document.getElementById('brewery-search');
 const tbody = document.getElementById('search-results');
 const table = document.getElementById('search-table');
 const next = document.getElementById('next');
+const heading = document.getElementById('heading2');
 const previous = document.getElementById('previous');
+const bodyContainer = document.getElementById('body-container');
 const mustSeeButton = document.getElementById('must-see-button');
 let city;
 let count = 1;
@@ -60,17 +63,42 @@ function newSearch(breweries) {
   }
 }
 
-// function renderMustSee() {
-//   const getList = localStorage.getItem('must-see');
-//   let mustSeeData;
-//   if (getList === 'undefined') {
-//     return null;
-//   } else {
-//     mustSeeData = JSON.parse(getList);
-
-//   }
-
-// }
+function renderMustSee() {
+  if (!mustSeeData) {
+    heading.textContent = 'No Breweries Selected';
+  } else {
+    while (bodyContainer.lastChild) {
+      bodyContainer.removeChild(bodyContainer.lastChild);
+    }
+    for (let i = 0; i < mustSeeData.length; i++) {
+      const row = document.createElement('div');
+      row.classList.add('row', 'text-center', 'justify-content-center', 'fb-50');
+      const div = document.createElement('div');
+      div.classList.add('brewery-background', 'rounded', 'shadow', 'mt-3', 'h-200');
+      div.setAttribute('style', 'width: 90%');
+      row.append(div);
+      const hTwo = document.createElement('h4');
+      hTwo.classList.add('page-font', 'text-white', 'lh-lg');
+      hTwo.textContent = mustSeeData[i].name;
+      const hSix = document.createElement('h6');
+      hSix.classList.add('page-font', 'text-white', 'lh-lg');
+      hSix.textContent = mustSeeData[i].street + ' ' + mustSeeData[i].city + ', ' + mustSeeData[i].state;
+      const divTwo = document.createElement('div');
+      divTwo.classList.add('d-flex', 'justify-content-around', 'w-100');
+      div.append(hTwo, hSix, divTwo);
+      const deleteButton = document.createElement('button');
+      deleteButton.setAttribute('type', 'submit');
+      deleteButton.classList.add('page-font', 'mt-1', 'btn-dark', 'text-white', 'btn-lg');
+      deleteButton.textContent = 'Delete';
+      const favoriteButton = document.createElement('button');
+      favoriteButton.setAttribute('type', 'submit');
+      favoriteButton.classList.add('page-font', 'mt-1', 'btn-warning', 'btn-lg');
+      favoriteButton.textContent = 'Make Favorite';
+      divTwo.append(deleteButton, favoriteButton);
+      bodyContainer.append(row);
+    }
+  }
+}
 
 searchForm.addEventListener('submit', e => {
   e.preventDefault();
@@ -132,6 +160,9 @@ mustSeeButton.addEventListener('click', () => {
       .then(res => {
         breweries = res;
         newSearch(breweries);
+        renderMustSee();
       });
   }
 });
+
+renderMustSee();
