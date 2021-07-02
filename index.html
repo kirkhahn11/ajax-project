@@ -32,7 +32,7 @@
           </div>
         </form>
       </div>
-      <table class="table table-dark table-bordered text-center w-75 m-auto hidden mt-1" id="search-table">
+      <table class="table table-dark table-bordered text-center w-75 m-auto hidden mt-5" id="search-table">
         <thead class="table-light">
           <tr>
             <th></th>
@@ -45,13 +45,37 @@
         <tfoot>
           <tr class="text-end">
             <td colspan="3">
-             <a class="link-primary">Next</a>
+              <div class="d-flex justify-content-around">
+                <button class="hidden btn-link link-danger" id="previous">Previous</button>
+                <button class="btn btn-link link-primary" id="next">Next</button>
+              </div>
             </td>
           </tr>
         </tfoot>
       </table>
       <div class="text-center">
         <button type="submit" id="must-see-button" class="hidden page-font mt-1 btn-danger btn-lg">Add to Must-See</button>
+      </div>
+      <div class="container" id="must-see">
+        <div class="row">
+          <div class="col-12 d-flex justify-content-center mt-4">
+            <h1 id="heading2" class="heading page-font col-6 text-center text-white">Must-See</h1>
+          </div>
+          <div class="body-container d-flex flex-wrap" id="body-container"></div>
+        </div>
+      </div>
+      <div class="delete-modal" id="delete-modal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title page-font" id="delete-modal-title"></h5>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary page-font" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger page-font">Confirm Delete</button>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   </div>
