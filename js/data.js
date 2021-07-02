@@ -14,8 +14,10 @@ window.addEventListener('beforeunload', function (event) {
 });
 
 function getData(data) {
-  for (let i = 0; i < data.length; i++) {
-    mustSeeData.push(data[i]);
+  if (data) {
+    for (let i = 0; i < data.length; i++) {
+      mustSeeData.push(data[i]);
+    }
   }
   const stateJSON = JSON.stringify(mustSeeData);
   localStorage.setItem('must-see', stateJSON);

@@ -5,6 +5,10 @@ const searchForm = document.getElementById('brewery-search');
 const tbody = document.getElementById('search-results');
 const table = document.getElementById('search-table');
 const next = document.getElementById('next');
+const deleteModal = document.getElementById('delete-modal');
+const deleteModalClose = document.getElementById('delete-modal-close');
+const deleteModalConfirm = document.getElementById('delete-modal-confirm');
+const deleteModalTitle = document.getElementById('delete-modal-title');
 const heading = document.getElementById('heading2');
 const previous = document.getElementById('previous');
 const bodyContainer = document.getElementById('body-container');
@@ -13,6 +17,14 @@ let city;
 let count = 1;
 let breweries;
 let mustSeeList = [];
+
+deleteModalClose.addEventListener('click', () => {
+  deleteModal.classList.replace('delete-modal', 'hidden');
+});
+
+deleteModalConfirm.addEventListener('click', () => {
+  deleteMustSee(event);
+});
 
 function searchFormatFix(string) {
   return string.replaceAll(' ', '_');
@@ -63,6 +75,28 @@ function newSearch(breweries) {
   }
 }
 
+function deleteModalAppear(event) {
+  deleteModal.classList.replace('hidden', 'delete-modal');
+  deleteModalConfirm.setAttribute('value', event.target.value);
+  for (let i = 0; i < mustSeeData.length; i++) {
+    if (mustSeeData[i].id.toString() === event.target.value.toString()) {
+      deleteModalTitle.textContent = 'Delete ' + mustSeeData[i].name + ' From Must-See?';
+    }
+  }
+}
+
+function deleteMustSee(event) {
+  let emptyData;
+  for (let i = 0; i < mustSeeData.length; i++) {
+    if (mustSeeData[i].id.toString() === event.target.value.toString()) {
+      mustSeeData.splice(i, 1);
+    }
+  }
+  deleteModal.classList.replace('delete-modal', 'hidden');
+  renderMustSee();
+  getData(emptyData);
+}
+
 function renderMustSee() {
   if (!mustSeeData) {
     heading.textContent = 'No Breweries Selected';
@@ -87,9 +121,13 @@ function renderMustSee() {
       divTwo.classList.add('d-flex', 'justify-content-around', 'w-100');
       div.append(hTwo, hSix, divTwo);
       const deleteButton = document.createElement('button');
+      deleteButton.setAttribute('value', mustSeeData[i].id);
       deleteButton.setAttribute('type', 'submit');
       deleteButton.classList.add('page-font', 'mt-1', 'btn-dark', 'text-white', 'btn-lg');
       deleteButton.textContent = 'Delete';
+      deleteButton.addEventListener('click', () => {
+        deleteModalAppear(event);
+      });
       const favoriteButton = document.createElement('button');
       favoriteButton.setAttribute('type', 'submit');
       favoriteButton.classList.add('page-font', 'mt-1', 'btn-warning', 'btn-lg');
