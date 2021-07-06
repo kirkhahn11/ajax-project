@@ -32,17 +32,13 @@ deleteModalClose.addEventListener('click', () => {
   deleteModal.classList.replace('delete-modal', 'hidden');
 });
 
-deleteModalConfirm.addEventListener('click', () => {
-  deleteMustSee(event);
-});
+deleteModalConfirm.addEventListener('click', deleteMustSee);
 
 favoriteModalClose.addEventListener('click', () => {
   favoriteModal.classList.replace('favorite-modal', 'hidden');
 });
 
-favoriteModalConfirm.addEventListener('click', () => {
-  addFavorite(event);
-});
+favoriteModalConfirm.addEventListener('click', addFavorite);
 
 function searchFormatFix(string) {
   return string.replaceAll(' ', '_');
