@@ -9,6 +9,10 @@ const deleteModal = document.getElementById('delete-modal');
 const deleteModalClose = document.getElementById('delete-modal-close');
 const deleteModalConfirm = document.getElementById('delete-modal-confirm');
 const deleteModalTitle = document.getElementById('delete-modal-title');
+const favoriteModal = document.getElementById('favorite-modal');
+const favoriteModalClose = document.getElementById('favorite-modal-close');
+const favoriteModalConfirm = document.getElementById('favorite-modal-confirm');
+const favoriteModalTitle = document.getElementById('favorite-modal-title');
 const heading = document.getElementById('heading2');
 const previous = document.getElementById('previous');
 const bodyContainer = document.getElementById('body-container');
@@ -17,6 +21,7 @@ let city;
 let count = 1;
 let breweries;
 let mustSeeList = [];
+let favorite;
 
 deleteModalClose.addEventListener('click', () => {
   deleteModal.classList.replace('delete-modal', 'hidden');
@@ -25,6 +30,14 @@ deleteModalClose.addEventListener('click', () => {
 deleteModalConfirm.addEventListener('click', () => {
   deleteMustSee(event);
 });
+
+favoriteModalClose.addEventListener('click', () => {
+  favoriteModal.classList.replace('favorite-modal', 'hidden');
+});
+
+// favoriteModalConfirm.addEventListener('click', () => {
+
+// })
 
 function searchFormatFix(string) {
   return string.replaceAll(' ', '_');
@@ -85,6 +98,24 @@ function deleteModalAppear(event) {
   }
 }
 
+function favoriteModalAppear(event) {
+  favoriteModal.classList.replace('hidden', 'favorite-modal');
+  favoriteModalConfirm.setAttribute('value', event.target.value);
+  if (favorite) {
+    for (let i = 0; i < mustSeeData.length; i++) {
+      if (mustSeeData[i].id.toString() === event.target.value.toString()) {
+        favoriteModalTitle.textContent = 'Replace ' + favorite.name + ' with ' + mustSeeData[i].name + '?';
+      }
+    }
+  } else {
+    for (let i = 0; i < mustSeeData.length; i++) {
+      if (mustSeeData[i].id.toString() === event.target.value.toString()) {
+        favoriteModalTitle.textContent = 'Make ' + mustSeeData[i].name + ' Your Favorite?';
+      }
+    }
+  }
+}
+
 function deleteMustSee(event) {
   let emptyData;
   for (let i = 0; i < mustSeeData.length; i++) {
@@ -129,9 +160,13 @@ function renderMustSee() {
         deleteModalAppear(event);
       });
       const favoriteButton = document.createElement('button');
+      favoriteButton.setAttribute('value', mustSeeData[i].id);
       favoriteButton.setAttribute('type', 'submit');
       favoriteButton.classList.add('page-font', 'mt-1', 'btn-warning', 'btn-lg');
       favoriteButton.textContent = 'Make Favorite';
+      favoriteButton.addEventListener('click', () => {
+        favoriteModalAppear(event);
+      });
       divTwo.append(deleteButton, favoriteButton);
       bodyContainer.append(row);
     }
