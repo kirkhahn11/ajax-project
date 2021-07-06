@@ -1,16 +1,25 @@
 /* exported getData */
 /* exported mustSeeData */
+/* exported getFavorite */
+/* exported favorite */
 let mustSeeData = [];
+let favorite;
 
-var dataJSON = localStorage.getItem('must-see');
+const dataJSON = localStorage.getItem('must-see');
+const dataJSONTwo = localStorage.getItem('favorite');
 
 if (dataJSON !== 'undefined') {
   mustSeeData = JSON.parse(dataJSON);
 }
 
+if (dataJSONTwo !== 'undefined') {
+  favorite = JSON.parse(dataJSONTwo);
+}
+
 window.addEventListener('beforeunload', function (event) {
   const stateJSON = JSON.stringify(mustSeeData);
-  localStorage.setItem('must-see', stateJSON);
+  const stateJSONTwo = JSON.stringify(favorite);
+  localStorage.setItem('must-see', stateJSON, 'favorite', stateJSONTwo);
 });
 
 function getData(data) {
@@ -21,4 +30,11 @@ function getData(data) {
   }
   const stateJSON = JSON.stringify(mustSeeData);
   localStorage.setItem('must-see', stateJSON);
+}
+
+function getFavorite() {
+  const data = localStorage.getItem('favorite');
+  if (data) {
+    favorite = JSON.parse(data);
+  }
 }

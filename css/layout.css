@@ -7,4 +7,27 @@
     font-size: 60px;
     width: 100%;
   }
+
+  #heading2 {
+    font-size: 60px;
+    width: 100%;
+  }
+
+  #favorite-heading {
+    font-size: 60px;
+    width: 100%;
+  }
+
+  .favorite-heading {
+    font-size: 60px !important;
+    width: 100%;
+  }
+
+  .fb-50 {
+    flex-basis: 100% !important;
+  }
+
+  #body-container {
+    justify-content: center;
+  }
 }

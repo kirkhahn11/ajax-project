@@ -10,6 +10,11 @@
   background-size: cover;
 }
 
+.favorite-background {
+  background-image: url(../images/beer-lined.jpeg);
+  background-size: cover;
+}
+
 #test {
   display: none;
 }
@@ -40,11 +45,19 @@
   display: none;
 }
 
+.favorite-heading {
+  font-size: 75px;
+}
+
 #heading {
   font-size: 90px;
 }
 
 #heading2 {
+  font-size: 90px;
+}
+
+#favorite-heading {
   font-size: 90px;
 }
 
