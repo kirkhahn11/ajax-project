@@ -217,9 +217,7 @@ function renderMustSee() {
       favoriteButton.setAttribute('type', 'submit');
       favoriteButton.classList.add('page-font', 'mt-1', 'btn-warning', 'btn-lg');
       favoriteButton.textContent = 'Make Favorite';
-      favoriteButton.addEventListener('click', () => {
-        favoriteModalAppear(event);
-      });
+      favoriteButton.addEventListener('click', favoriteModalAppear);
       divTwo.append(deleteButton, favoriteButton);
       bodyContainer.append(row);
     }
