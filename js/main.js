@@ -34,19 +34,19 @@ let breweries;
 let mustSeeList = [];
 
 deleteModalClose.addEventListener('click', () => {
-  deleteModal.classList.replace('my-modal', 'hidden');
+  deleteModal.classList.replace('brewery-modal', 'hidden');
 });
 
 deleteModalConfirm.addEventListener('click', deleteMustSee);
 
 favoriteModalClose.addEventListener('click', () => {
-  favoriteModal.classList.replace('my-modal', 'hidden');
+  favoriteModal.classList.replace('brewery-modal', 'hidden');
 });
 
 favoriteModalConfirm.addEventListener('click', addFavorite);
 
 editModalClose.addEventListener('click', () => {
-  editModal.classList.replace('my-modal', 'hidden');
+  editModal.classList.replace('brewery-modal', 'hidden');
 });
 
 editModalConfirm.addEventListener('click', editCaption);
@@ -101,12 +101,12 @@ function newSearch(breweries) {
 }
 
 function editModalAppear() {
-  editModal.classList.replace('hidden', 'my-modal');
+  editModal.classList.replace('hidden', 'brewery-modal');
   editModalTitle.textContent = 'Update Caption For ' + favorite.name + '?';
 }
 
 function deleteModalAppear(event) {
-  deleteModal.classList.replace('hidden', 'my-modal');
+  deleteModal.classList.replace('hidden', 'brewery-modal');
   deleteModalConfirm.setAttribute('value', event.target.value);
   for (let i = 0; i < mustSeeData.length; i++) {
     if (mustSeeData[i].id.toString() === event.target.value.toString()) {
@@ -116,7 +116,7 @@ function deleteModalAppear(event) {
 }
 
 function favoriteModalAppear(event) {
-  favoriteModal.classList.replace('hidden', 'my-modal');
+  favoriteModal.classList.replace('hidden', 'brewery-modal');
   favoriteModalConfirm.setAttribute('value', event.target.value);
   if (favorite) {
     for (let i = 0; i < mustSeeData.length; i++) {
@@ -140,7 +140,7 @@ function deleteMustSee(event) {
       mustSeeData.splice(i, 1);
     }
   }
-  deleteModal.classList.replace('my-modal', 'hidden');
+  deleteModal.classList.replace('brewery-modal', 'hidden');
   renderMustSee();
   getData(emptyData);
 }
@@ -154,7 +154,7 @@ function addFavorite(event) {
   }
   newFavorite.caption = favoriteCaption.value;
   newFavorite.beer = favoriteBeer.value;
-  favoriteModal.classList.replace('my-modal', 'hidden');
+  favoriteModal.classList.replace('brewery-modal', 'hidden');
   localStorage.setItem('favorite', JSON.stringify(newFavorite));
   getFavorite();
   favoriteCaption.value = '';
@@ -165,7 +165,7 @@ function addFavorite(event) {
 function editCaption(event) {
   const newFavorite = favorite;
   newFavorite.caption = editCaptionValue.value;
-  editModal.classList.replace('my-modal', 'hidden');
+  editModal.classList.replace('brewery-modal', 'hidden');
   localStorage.setItem('favorite', JSON.stringify(newFavorite));
   getFavorite();
   editCaptionValue.value = '';
