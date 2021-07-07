@@ -19,6 +19,11 @@ const favoriteCaption = document.getElementById('favorite-caption');
 const favoriteHeading = document.getElementById('favorite-heading');
 const favoriteBeer = document.getElementById('favorite-beer');
 const favoriteBodyContainer = document.getElementById('favorite-body-container');
+const editModal = document.getElementById('edit-modal');
+const editModalClose = document.getElementById('edit-modal-close');
+const editModalConfirm = document.getElementById('edit-modal-confirm');
+const editModalTitle = document.getElementById('edit-modal-title');
+const editCaptionValue = document.getElementById('edit-caption');
 const heading = document.getElementById('heading2');
 const previous = document.getElementById('previous');
 const bodyContainer = document.getElementById('body-container');
@@ -29,16 +34,22 @@ let breweries;
 let mustSeeList = [];
 
 deleteModalClose.addEventListener('click', () => {
-  deleteModal.classList.replace('delete-modal', 'hidden');
+  deleteModal.classList.replace('brewery-modal', 'hidden');
 });
 
 deleteModalConfirm.addEventListener('click', deleteMustSee);
 
 favoriteModalClose.addEventListener('click', () => {
-  favoriteModal.classList.replace('favorite-modal', 'hidden');
+  favoriteModal.classList.replace('brewery-modal', 'hidden');
 });
 
 favoriteModalConfirm.addEventListener('click', addFavorite);
+
+editModalClose.addEventListener('click', () => {
+  editModal.classList.replace('brewery-modal', 'hidden');
+});
+
+editModalConfirm.addEventListener('click', editCaption);
 
 function searchFormatFix(string) {
   return string.replaceAll(' ', '_');
@@ -89,8 +100,13 @@ function newSearch(breweries) {
   }
 }
 
+function editModalAppear() {
+  editModal.classList.replace('hidden', 'brewery-modal');
+  editModalTitle.textContent = 'Update Caption For ' + favorite.name + '?';
+}
+
 function deleteModalAppear(event) {
-  deleteModal.classList.replace('hidden', 'delete-modal');
+  deleteModal.classList.replace('hidden', 'brewery-modal');
   deleteModalConfirm.setAttribute('value', event.target.value);
   for (let i = 0; i < mustSeeData.length; i++) {
     if (mustSeeData[i].id.toString() === event.target.value.toString()) {
@@ -100,7 +116,7 @@ function deleteModalAppear(event) {
 }
 
 function favoriteModalAppear(event) {
-  favoriteModal.classList.replace('hidden', 'favorite-modal');
+  favoriteModal.classList.replace('hidden', 'brewery-modal');
   favoriteModalConfirm.setAttribute('value', event.target.value);
   if (favorite) {
     for (let i = 0; i < mustSeeData.length; i++) {
@@ -124,7 +140,7 @@ function deleteMustSee(event) {
       mustSeeData.splice(i, 1);
     }
   }
-  deleteModal.classList.replace('delete-modal', 'hidden');
+  deleteModal.classList.replace('brewery-modal', 'hidden');
   renderMustSee();
   getData(emptyData);
 }
@@ -138,11 +154,21 @@ function addFavorite(event) {
   }
   newFavorite.caption = favoriteCaption.value;
   newFavorite.beer = favoriteBeer.value;
-  favoriteModal.classList.replace('favorite-modal', 'hidden');
+  favoriteModal.classList.replace('brewery-modal', 'hidden');
   localStorage.setItem('favorite', JSON.stringify(newFavorite));
   getFavorite();
   favoriteCaption.value = '';
   favoriteBeer.value = '';
+  renderFavorite();
+}
+
+function editCaption(event) {
+  const newFavorite = favorite;
+  newFavorite.caption = editCaptionValue.value;
+  editModal.classList.replace('brewery-modal', 'hidden');
+  localStorage.setItem('favorite', JSON.stringify(newFavorite));
+  getFavorite();
+  editCaptionValue.value = '';
   renderFavorite();
 }
 
@@ -154,7 +180,7 @@ function renderFavorite() {
       favoriteBodyContainer.removeChild(favoriteBodyContainer.lastChild);
     }
     const div = document.createElement('div');
-    div.classList.add('col-12', 'favorite-background');
+    div.classList.add('col-12', 'favorite-background', 'text-center');
     const name = document.createElement('h1');
     name.classList.add('favorite-heading', 'heading', 'page-font', 'text-center', 'text-warning');
     name.textContent = favorite.name;
@@ -176,7 +202,11 @@ function renderFavorite() {
     caption.classList.add('heading', 'page-font', 'text-center', 'text-dark');
     caption.textContent = favorite.caption;
     divThree.append(caption);
-    div.append(name, divTwo, captionHeading, divThree);
+    const button = document.createElement('button');
+    button.classList.add('page-font', 'mt-1', 'mb-1', 'w-25', 'm-auto', 'btn-warning', 'btn-lg');
+    button.textContent = 'Edit Caption';
+    button.addEventListener('click', editModalAppear);
+    div.append(name, divTwo, captionHeading, divThree, button);
     favoriteBodyContainer.append(div);
   }
 }

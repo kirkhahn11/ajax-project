@@ -101,6 +101,22 @@
           </div>
         </div>
       </div>
+      <div class="hidden" id="edit-modal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content align-items-center">
+            <div class="border-bottom-0 modal-header">
+              <h5 class="modal-title page-font" id="edit-modal-title"></h5>
+            </div>
+            <input class="d-inline w-75 mt-1 form-control" id="edit-caption" type="text"
+              placeholder="New Caption">
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary page-font" data-bs-dismiss="modal"
+                id="edit-modal-close">Close</button>
+              <button type="button" class="btn btn-danger page-font" id="edit-modal-confirm">Confirm Edit</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
   </div>
   <script src="js/data.js"></script>
