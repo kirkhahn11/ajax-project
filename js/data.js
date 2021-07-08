@@ -8,11 +8,11 @@ let favorite;
 const dataJSON = localStorage.getItem('must-see');
 const dataJSONTwo = localStorage.getItem('favorite');
 
-if (dataJSON !== 'undefined') {
+if (dataJSON) {
   mustSeeData = JSON.parse(dataJSON);
 }
 
-if (dataJSONTwo !== 'undefined') {
+if (dataJSONTwo) {
   favorite = JSON.parse(dataJSONTwo);
 }
 
