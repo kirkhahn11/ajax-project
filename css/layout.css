@@ -4,22 +4,22 @@
   }
 
   #heading {
-    font-size: 60px;
+    font-size: 60px !important;
     width: 100%;
   }
 
   #heading2 {
-    font-size: 60px;
+    font-size: 60px !important;
     width: 100%;
   }
 
   #favorite-heading {
-    font-size: 60px;
+    font-size: 60px !important;
     width: 100%;
   }
 
   .favorite-heading {
-    font-size: 60px !important;
+    font-size: 40px !important;
     width: 100%;
   }
 
@@ -29,5 +29,9 @@
 
   #body-container {
     justify-content: center;
+  }
+
+  .w-20 {
+    width: 50% !important;
   }
 }
