@@ -203,7 +203,7 @@ function renderFavorite() {
     caption.textContent = favorite.caption;
     divThree.append(caption);
     const button = document.createElement('button');
-    button.classList.add('page-font', 'mt-1', 'mb-1', 'w-25', 'm-auto', 'btn-warning', 'btn-lg');
+    button.classList.add('page-font', 'mt-1', 'mb-1', 'w-20', 'm-auto', 'btn-warning', 'btn-lg');
     button.textContent = 'Edit Caption';
     button.addEventListener('click', editModalAppear);
     div.append(name, divTwo, captionHeading, divThree, button);
@@ -212,9 +212,13 @@ function renderFavorite() {
 }
 
 function renderMustSee() {
-  if (!mustSeeData) {
+  if (mustSeeData.length === 0) {
     heading.textContent = 'No Breweries Selected';
+    while (bodyContainer.lastChild) {
+      bodyContainer.removeChild(bodyContainer.lastChild);
+    }
   } else {
+    heading.textContent = 'Must-See';
     while (bodyContainer.lastChild) {
       bodyContainer.removeChild(bodyContainer.lastChild);
     }
