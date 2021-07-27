@@ -25,6 +25,8 @@ const editModalConfirm = document.getElementById('edit-modal-confirm');
 const editModalTitle = document.getElementById('edit-modal-title');
 const editCaptionValue = document.getElementById('edit-caption');
 const heading = document.getElementById('heading2');
+const noResults = document.getElementById('heading3');
+const loader = document.getElementById('loader');
 const previous = document.getElementById('previous');
 const bodyContainer = document.getElementById('body-container');
 const mustSeeButton = document.getElementById('must-see-button');
@@ -66,37 +68,44 @@ function addMustSee(brewery) {
 }
 
 function newSearch(breweries) {
-  table.classList.remove('hidden');
-  next.classList.remove('hidden');
-  if (breweries.length === 10) {
-    next.classList.add('btn');
-  }
-  if (breweries.length < 10) {
-    next.classList.replace('btn', 'hidden');
-  }
-  if (count === 1) {
-    previous.classList.replace('btn', 'hidden');
-  }
-  while (tbody.lastChild) {
-    tbody.removeChild(tbody.lastChild);
-  }
-  mustSeeButton.classList.replace('hidden', 'btn');
-  for (let i = 0; i < breweries.length; i++) {
-    const tr = document.createElement('tr');
-    const tdInput = document.createElement('td');
-    const input = document.createElement('input');
-    input.setAttribute('type', 'checkbox');
-    input.classList.add('mt-2');
-    input.addEventListener('change', function () {
-      addMustSee(breweries[i]);
-    });
-    tdInput.append(input);
-    const tdName = document.createElement('td');
-    tdName.textContent = breweries[i].name;
-    const tdAddress = document.createElement('td');
-    tdAddress.textContent = breweries[i].street;
-    tr.append(tdInput, tdName, tdAddress);
-    tbody.append(tr);
+  if (breweries.length === 0) {
+    noResults.classList.remove('hidden');
+    noResults.textContent = 'No Breweries Found :(';
+    table.classList.add('hidden');
+    mustSeeButton.classList.add('hidden');
+  } else {
+    table.classList.remove('hidden');
+    noResults.classList.add('hidden');
+    if (breweries.length === 10) {
+      next.classList.add('btn');
+    }
+    if (breweries.length < 10) {
+      next.classList.replace('btn', 'hidden');
+    }
+    if (count === 1) {
+      previous.classList.replace('btn', 'hidden');
+    }
+    while (tbody.lastChild) {
+      tbody.removeChild(tbody.lastChild);
+    }
+    mustSeeButton.classList.replace('hidden', 'btn');
+    for (let i = 0; i < breweries.length; i++) {
+      const tr = document.createElement('tr');
+      const tdInput = document.createElement('td');
+      const input = document.createElement('input');
+      input.setAttribute('type', 'checkbox');
+      input.classList.add('mt-2');
+      input.addEventListener('change', function () {
+        addMustSee(breweries[i]);
+      });
+      tdInput.append(input);
+      const tdName = document.createElement('td');
+      tdName.textContent = breweries[i].name;
+      const tdAddress = document.createElement('td');
+      tdAddress.textContent = breweries[i].street;
+      tr.append(tdInput, tdName, tdAddress);
+      tbody.append(tr);
+    }
   }
 }
 
@@ -261,14 +270,24 @@ function renderMustSee() {
 searchForm.addEventListener('submit', e => {
   e.preventDefault();
   breweries = [];
+  count = 1;
   previous.classList.replace('hidden', 'btn');
   city = locationSearch.value;
   const searchValue = searchFormatFix(city);
   locationSearch.value = '';
+  loader.classList.remove('hidden');
   fetch(`https://api.openbrewerydb.org/breweries?by_city=${searchValue}&per_page=10`)
-    .then(res => res.json())
+    .then(res => {
+      if (!res.ok) {
+        window.alert('Unexpected Error');
+        throw Error('Unexpected Error');
+      } else {
+        return res.json();
+      }
+    })
     .then(res => {
       breweries = res;
+      loader.classList.add('hidden');
       newSearch(breweries);
     });
 });
@@ -278,11 +297,20 @@ next.addEventListener('click', () => {
   breweries = [];
   count++;
   previous.classList.replace('hidden', 'btn');
+  loader.classList.remove('hidden');
   const searchValue = searchFormatFix(city);
   fetch(`https://api.openbrewerydb.org/breweries?by_city=${searchValue}&per_page=10&page=${count}`)
-    .then(res => res.json())
+    .then(res => {
+      if (!res.ok) {
+        window.alert('Unexpected Error');
+        throw Error('Unexpected Error');
+      } else {
+        return res.json();
+      }
+    })
     .then(res => {
       breweries = res;
+      loader.classList.add('hidden');
       newSearch(breweries);
     });
 });
@@ -291,11 +319,20 @@ previous.addEventListener('click', () => {
   mustSeeList = [];
   breweries = [];
   count--;
+  loader.classList.remove('hidden');
   const searchValue = searchFormatFix(city);
   fetch(`https://api.openbrewerydb.org/breweries?by_city=${searchValue}&per_page=10&page=${count}`)
-    .then(res => res.json())
+    .then(res => {
+      if (!res.ok) {
+        window.alert('Unexpected Error');
+        throw Error('Unexpected Error');
+      } else {
+        return res.json();
+      }
+    })
     .then(res => {
       breweries = res;
+      loader.classList.add('hidden');
       newSearch(breweries);
     });
 });
@@ -314,7 +351,14 @@ mustSeeButton.addEventListener('click', () => {
     mustSeeList = [];
     const searchValue = searchFormatFix(city);
     fetch(`https://api.openbrewerydb.org/breweries?by_city=${searchValue}&per_page=10&page=${count}`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          window.alert('Unexpected Error');
+          throw Error('Unexpected Error');
+        } else {
+          return res.json();
+        }
+      })
       .then(res => {
         breweries = res;
         newSearch(breweries);
