@@ -1,4 +1,4 @@
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 812px) {
   .head-img {
     display: none;
   }
@@ -9,6 +9,11 @@
   }
 
   #heading2 {
+    font-size: 60px !important;
+    width: 100%;
+  }
+
+  #heading3 {
     font-size: 60px !important;
     width: 100%;
   }
